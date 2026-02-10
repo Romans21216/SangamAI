@@ -2,7 +2,7 @@ import streamlit as st
 from firebase_admin import auth, firestore
 import requests
 
-API_KEY = "AIzaSyB6HlO1nwckhu5YRumunNhOd-O_wGL83xs"
+API_KEY = "PUT_YOUR_OWN_API_KEY_HERE_WHY_TAKE_MINE"
 
 
 def verify_password(email, password):
