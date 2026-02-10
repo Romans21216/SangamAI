@@ -30,16 +30,15 @@ WisdomAI is a production-grade Retrieval-Augmented Generation (RAG) application 
 ## ✨ Features
 
 ### Core Capabilities
-- **🔐 Secure Authentication** — Firebase-backed user management with email/password authentication
-- **📄 PDF Processing** — Upload and automatically index PDF documents for semantic search
-- **🎥 YouTube Analysis** — Paste any YouTube URL to extract transcript, index it, and chat about the video
-- **📊 CSV Intelligence** — Upload CSV datasets and query them with natural language via a Pandas agent
-- **💬 Conversational RAG** — Ask natural language questions about your content with context-aware responses
-- **🧠 Multi-Model Support** — Access GPT-4, Claude, Gemini, and Grok models through a unified interface
-- **💾 Persistent Chat History** — Conversations survive page refreshes and are stored in Firestore
-- **🔄 Auto-Load Intelligence** — Vectorstores load automatically when switching between documents
-- **👤 User Profiles** — Customizable display names and saved API keys per user
-- **🎨 Premium UI** — Custom "Forge" theme with industrial warmth aesthetic
+- **Secure Authentication** — Firebase-backed user management with email/password authentication
+- **PDF Processing** — Upload and automatically index PDF documents for semantic search
+- **YouTube Analysis** — Paste any YouTube URL to extract transcript, index it, and chat about the video
+- **CSV Intelligence** — Upload CSV datasets and query them with natural language via a Pandas agent
+- **Conversational RAG** — Ask natural language questions about your content with context-aware responses
+- **Multi-Model Support** — Access GPT-4, Claude, Gemini, and Grok models through a unified interface
+- **Persistent Chat History** — Conversations survive page refreshes and are stored in Firestore
+- **Auto-Load Intelligence** — Vectorstores load automatically when switching between documents
+- **User Profiles** — Customizable display names and saved API keys per user
 
 ### Technical Highlights
 - **Multi-Modal Pipeline** — Unified RAG architecture handles PDFs, YouTube transcripts, and CSV datasets
@@ -49,13 +48,12 @@ WisdomAI is a production-grade Retrieval-Augmented Generation (RAG) application 
 - **Pandas Agent** — Natural language querying of structured data via `langchain-experimental`
 - **Conversational Memory** — Windowed memory tracks last 8 exchanges for context retention
 - **Two-Stage Retrieval** — Condense-question chain + document QA chain for accurate responses
-- **Creative Loading UX** — Animated pipeline visualization during document processing
 
 ---
 
 ## 🏗 Architecture
 
-OmniMind implements a modular, production-ready RAG architecture:
+WisdomAI implements a modular, production-ready RAG architecture:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -205,7 +203,7 @@ python -c "from sentence_transformers import SentenceTransformer; SentenceTransf
 Update `modules/auth.py` line 40 with your Firebase Web API key:
 
 ```python
-FIREBASE_API_KEY = "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+FIREBASE_API_KEY = "AIzaSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ```
 
 Get this from: Firebase Console → Project Settings → Web API Key
