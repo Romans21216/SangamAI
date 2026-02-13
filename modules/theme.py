@@ -1,4 +1,4 @@
-"""WisdomAI Visual Identity — v2  ·  «Forge» theme
+"""SangamAI Visual Identity — v2  ·  «Forge» theme
 
 Design direction: Industrial warmth meets editorial refinement.
 ───────────────────────────────────────────────────────────────

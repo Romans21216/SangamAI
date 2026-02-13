@@ -5,7 +5,7 @@ from modules.auth import get_username, set_username
 
 
 def show_profile_page():
-    st.set_page_config(page_title="WisdomAI — Profile", page_icon="🧠", layout="centered")
+    st.set_page_config(page_title="SangamAI — Profile", page_icon="🧠", layout="centered")
     inject_theme()
 
     db = firestore.client()
@@ -22,7 +22,7 @@ def show_profile_page():
                 <span style="font-family:var(--font-display);font-size:1.5rem;
                       background:linear-gradient(135deg,var(--accent),#F4A261);
                       -webkit-background-clip:text;-webkit-text-fill-color:transparent;">
-                WisdomAI</span>
+                SangamAI</span>
             </div>
             """,
             unsafe_allow_html=True,

@@ -28,12 +28,12 @@ if st.session_state.user_id:
     # Show a brief loading state on the first run after login
     if "_app_ready" not in st.session_state:
         from modules.theme import inject_theme
-        st.set_page_config(page_title="WisdomAI", page_icon="🧠", layout="wide")
+        st.set_page_config(page_title="SangamAI", page_icon="🧠", layout="wide")
         inject_theme()
         st.markdown(
             """
             <div class="login-loader-overlay">
-                <h2>WisdomAI</h2>
+                <h2>SangamAI</h2>
                 <div class="login-loader-bar"></div>
                 <span class="login-loader-text">Preparing your workspace…</span>
             </div>

@@ -1,8 +1,8 @@
-# WisdomAI
+# SangamAI
 
 **Where content meets clarity.**
 
-WisdomAI is a production-grade Retrieval-Augmented Generation (RAG) application that transforms PDFs, YouTube videos, and CSV datasets into interactive, conversational knowledge bases. Built with LangChain and powered by state-of-the-art language models via OpenRouter, it enables intelligent multi-modal querying with persistent chat history and context-aware responses.
+SangamAI is a production-grade Retrieval-Augmented Generation (RAG) application that transforms PDFs, YouTube videos, and CSV datasets into interactive, conversational knowledge bases. Built with LangChain and powered by state-of-the-art language models via OpenRouter, it enables intelligent multi-modal querying with persistent chat history and context-aware responses.
 
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/streamlit-1.31+-red.svg)](https://streamlit.io)
@@ -285,28 +285,28 @@ OmniMind supports three content types via tabs in the Upload panel:
 **PDF Chat:**
 ```
 User: "What is the main topic of this document?"
-WisdomAI: Based on the content, this document focuses on...
+SangamAI: Based on the content, this document focuses on...
 
 User: "Can you elaborate on chapter 3?"
-WisdomAI: Chapter 3 discusses... [automatically understands context]
+SangamAI: Chapter 3 discusses... [automatically understands context]
 ```
 
 **YouTube Chat:**
 ```
 User: "What is this video about?"
-WisdomAI: The video covers... [answers from transcript]
+SangamAI: The video covers... [answers from transcript]
 
 User: "What did the speaker say about AI?"
-WisdomAI: Around the middle of the video, the speaker mentions...
+SangamAI: Around the middle of the video, the speaker mentions...
 ```
 
 **CSV Chat:**
 ```
 User: "What is the total revenue?"
-WisdomAI: The total revenue is $1,234,567.89
+SangamAI: The total revenue is $1,234,567.89
 
 User: "Which month had the highest sales?"
-WisdomAI: March had the highest sales at $189,432
+SangamAI: March had the highest sales at $189,432
 ```
 
 ---
@@ -314,7 +314,7 @@ WisdomAI: March had the highest sales at $189,432
 ## Project Structure
 
 ```
-wisdomai/
+sangamai/
 ├── app.py                      # Application entry point & routing
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # This file

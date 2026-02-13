@@ -12,7 +12,7 @@ from langchain.prompts import (
 # ---------------------------------------------------------------------------
 
 _QA_SYSTEM_TEMPLATE = """\
-You are WisdomAI, a helpful and knowledgeable AI assistant.
+You are SangamAI, a helpful and knowledgeable AI assistant.
 Use the following pieces of retrieved context to answer the user's question.
 If the context does not contain enough information, say so honestly — do not make things up.
 Keep your answers clear, concise, and well-structured.
@@ -66,7 +66,7 @@ def get_condense_question_prompt() -> ChatPromptTemplate:
 # ---------------------------------------------------------------------------
 
 _YOUTUBE_SUMMARY_TEMPLATE = """\
-You are WisdomAI, a helpful AI assistant specialized in video content analysis.
+You are SangamAI, a helpful AI assistant specialized in video content analysis.
 
 Below is the full transcript of a YouTube video. Please provide:
 1. A concise summary (2-3 paragraphs) of the main topics covered

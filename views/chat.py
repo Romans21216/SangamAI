@@ -79,7 +79,7 @@ def _render_sidebar() -> tuple[str, str]:
                 <span style="font-family:var(--font-display);font-size:1.5rem;
                       background:linear-gradient(135deg,var(--accent),#F4A261);
                       -webkit-background-clip:text;-webkit-text-fill-color:transparent;">
-                WisdomAI</span>
+                SangamAI</span>
             </div>
             """,
             unsafe_allow_html=True,
@@ -147,7 +147,7 @@ def _render_upload_tab() -> None:
         <div style="padding:0.5rem 0 1.2rem;">
             <h2 style="margin:0;">Upload Knowledge</h2>
             <p style="color:var(--text-muted);margin:0.2rem 0 0;">
-                Feed documents, videos, or datasets to WisdomAI.
+                Feed documents, videos, or datasets to SangamAI.
             </p>
         </div>
         """,
@@ -454,7 +454,7 @@ def _render_chat_tab(api_key: str, model_name: str) -> None:
 # ── Main entry point ──────────────────────────────────────────────────
 
 def show_chat_page():
-    st.set_page_config(page_title="WisdomAI", page_icon="🧠", layout="wide")
+    st.set_page_config(page_title="SangamAI", page_icon="🧠", layout="wide")
     inject_theme()
 
     api_key, model_name = _render_sidebar()
@@ -463,7 +463,7 @@ def show_chat_page():
         st.markdown(
             """
             <div class="omni-hero">
-                <h1>WisdomAI</h1>
+                <h1>SangamAI</h1>
                 <p class="tagline">Enter your OpenRouter API key in the sidebar to begin.</p>
             </div>
             """,

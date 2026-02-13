@@ -4,14 +4,14 @@ from modules.theme import inject_theme
 
 
 def show_login_page():
-    st.set_page_config(page_title="WisdomAI — Login", page_icon="🧠", layout="centered")
+    st.set_page_config(page_title="SangamAI — Login", page_icon="🧠", layout="centered")
     inject_theme()
 
     # ── Hero ──────────────────────────────────────────────────────
     st.markdown(
         """
         <div class="omni-hero">
-            <h1>WisdomAI</h1>
+            <h1>SangamAI</h1>
             <p class="tagline">Where content meets clarity</p>
         </div>
         <div class="omni-divider"></div>
