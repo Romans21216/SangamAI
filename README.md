@@ -1,12 +1,13 @@
-# SangamAI
+# SargamAI
 
 **Where content meets clarity.**
 
-SangamAI is a production-grade Retrieval-Augmented Generation (RAG) application that transforms PDFs, YouTube videos, and CSV datasets into interactive, conversational knowledge bases. Built with LangChain and powered by state-of-the-art language models via OpenRouter, it enables intelligent multi-modal querying with persistent chat history and context-aware responses.
+SargamAI is a production-grade Retrieval-Augmented Generation (RAG) application that transforms PDFs, YouTube videos, and CSV datasets into interactive, conversational knowledge bases. Built with **FastAPI** and **Next.js**, powered by state-of-the-art language models via OpenRouter, it features a modern terminal-inspired UI with PDF split-view, intelligent multi-modal querying, persistent chat history, and context-aware responses.
 
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Streamlit](https://img.shields.io/badge/streamlit-1.31+-red.svg)](https://streamlit.io)
-[![LangChain](https://img.shields.io/badge/langchain-latest-green.svg)](https://python.langchain.com/)
+[![FastAPI](https://img.shields.io/badge/fastapi-latest-green.svg)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/next.js-16.1-black.svg)](https://nextjs.org/)
+[![LangChain](https://img.shields.io/badge/langchain-1.2+-green.svg)](https://python.langchain.com/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
@@ -24,6 +25,7 @@ SangamAI is a production-grade Retrieval-Augmented Generation (RAG) application 
 - [How It Works](#-how-it-works)
 - [Memory System](#-memory-system)
 - [Data Schema](#-data-schema)
+- [Security Considerations](#-security-considerations)
 
 ---
 
@@ -31,54 +33,92 @@ SangamAI is a production-grade Retrieval-Augmented Generation (RAG) application 
 
 ### Core Capabilities
 - **Secure Authentication** - Firebase-backed user management with email/password authentication
-- **PDF Processing** - Upload and automatically index PDF documents for semantic search
+- **PDF Processing** - Upload and automatically index PDF documents for semantic search with split-view display
 - **YouTube Analysis** - Paste any YouTube URL to extract transcript, index it, and chat about the video
 - **CSV Intelligence** - Upload CSV datasets and query them with natural language via a Pandas agent
 - **Conversational RAG** - Ask natural language questions about your content with context-aware responses
 - **Multi-Model Support** - Access GPT-4, Claude, Gemini, and Grok models through a unified interface
-- **Persistent Chat History** - Conversations survive page refreshes and are stored in Firestore
+- **Persistent Chat History** - Conversations survive refreshes and are stored in Firestore
 - **Auto-Load Intelligence** - Vectorstores load automatically when switching between documents
 - **User Profiles** - Customizable display names and saved API keys per user
 
+### UI/UX Features
+- **Terminal-Inspired Thinking State** - Visual pipeline stages (PARSE → EMBED → SEARCH → RANK → GEN)
+- **PDF Split-View** - Document viewer on left, chat interface on right for PDF files
+- **Collapsible Source Chunks** - View retrieved document chunks with page numbers and excerpts
+- **Modern Design System** - "Obsidian Ember" theme with custom Fontshare fonts (Satoshi, Clash Display, General Sans, JetBrains Mono)
+- **Responsive & Fast** - Built with Next.js 16 + React 19 + Tailwind CSS v4
+
 ### Technical Highlights
+- **FastAPI Backend** - Async REST API with JWT authentication
+- **Next.js Frontend** - Server-side rendering, App Router, Turbopack
 - **Multi-Modal Pipeline** - Unified RAG architecture handles PDFs, YouTube transcripts, and CSV datasets
 - **Semantic Chunking** - Intelligent text splitting preserving context across 1000-character segments
 - **Local Embeddings** - HuggingFace `all-MiniLM-L6-v2` runs locally (no API costs)
-- **FAISS Vector Store** - High-performance similarity search with Firestore persistence
-- **Pandas Agent** - Natural language querying of structured data via `langchain-experimental`
+- **FAISS Vector Store** - High-performance similarity search with Firestore persistence (chunked <700KB)
+- **Pandas Agent** - Natural language querying of structured data via LangChain agents
 - **Conversational Memory** - Windowed memory tracks last 8 exchanges for context retention
 - **Two-Stage Retrieval** - Condense-question chain + document QA chain for accurate responses
+- **Cloud Ready** - Deploy backend on Render, frontend on Vercel
 
 ---
 
 ## 🏗 Architecture
 
-WisdomAI implements a modular, production-ready RAG architecture:
+OmniMind implements a modern, production-ready full-stack RAG architecture:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Streamlit Frontend                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
-│  │  Login View  │  │   Chat View  │  │ Profile View │           │
-│  └──────────────┘  └──────────────┘  └──────────────┘           │
-│                    PDF │ YouTube │ CSV                          │
-└────────────┬────────────────────────────────────────────────────┘
-             │
-┌────────────┴────────────────────────────────────────────────────┐
-│                      Application Layer                          │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐    │
-│  │  Auth   │ │   RAG   │ │ Agents  │ │ Memory  │ │ Chains  │    │
-│  │ Module  │ │ Module  │ │ Module  │ │ Module  │ │ Module  │    │
-│  └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘    │
-└────────────┬────────────────────────────────────────────────────┘
-             │
-┌────────────┴────────────────────────────────────────────────────┐
-│                     Data & External Services                    │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
-│  │   Firestore  │  │  OpenRouter  │  │    FAISS     │           │
-│  │   (NoSQL)    │  │  (LLM API)   │  │  (VectorDB)  │           │
-│  └──────────────┘  └──────────────┘  └──────────────┘           │
-└─────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────┐
+│                     NEXT.JS FRONTEND (CLIENT/)                    │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐             │
+│  │ app/login    │  │ app/chat     │  │ app/profile  │             │
+│  │ (Auth UI)    │  │ (Split-view) │  │ (Settings)   │             │
+│  └──────────────┘  └──────────────┘  └──────────────┘             │
+│  • NextJS                  • Tailwind CSS v4                      │
+│  • Firebase Client SDK      • Terminal Aesthetic                  │
+│  • PDF Split-View           • Source Chunks Display               │
+└───────────────────────────────────────────────────────────────────┘
+                            ↓ ↑ (REST API + JWT)
+┌───────────────────────────────────────────────────────────────────┐
+│                    FASTAPI BACKEND (SERVER/)                      │
+│  ┌───────────────────────────────────────────────────────────┐    │
+│  │ routes/                                                   │    │
+│  │  ├── auth.py       (Register endpoint)                    │    │
+│  │  ├── upload.py     (PDF/YouTube/CSV ingestion)            │    │
+│  │  ├── chat.py       (Message endpoint, returns sources)    │    │
+│  │  ├── files.py      (List, delete, GET PDF bytes)          │    │
+│  │  └── profile.py    (User settings, API key)               │    │
+│  └───────────────────────────────────────────────────────────┘    │
+│  ┌───────────────────────────────────────────────────────────┐    │
+│  │ modules/                                                  │    │
+│  │  ├── chains.py     (LCEL-based ConversationalRAGChain)    │    │
+│  │  ├── rag.py        (Vectorstore creation, chunking)       │    │
+│  │  ├── memory.py     (Chat history management)              │    │
+│  │  ├── database.py   (Firestore operations, PDF storage)    │    │
+│  │  ├── agents.py     (Calculator, Wikipedia, DuckDuckGo)    │    │
+│  │  └── llm.py        (OpenRouter client)                    │    │
+│  └───────────────────────────────────────────────────────────┘    │
+│                                                                   │
+└───────────────────────────────────────────────────────────────────┘
+                            ↓ ↑
+┌───────────────────────────────────────────────────────────────────┐
+│                      FIREBASE BACKEND                             │
+│  ┌──────────────────┐         ┌──────────────────┐               │
+│  │Firebase Auth     │         │Firestore DB      │               │
+│  │• Secure login    │         │• Vectorstores    │               │
+│  │• JWT tokens      │         │• Chat history    │               │
+│  └──────────────────┘         │• User profiles   │               │
+│                               │• Raw PDFs        │               │
+│                               └──────────────────┘               │
+└───────────────────────────────────────────────────────────────────┘
+                            ↓ ↑
+┌───────────────────────────────────────────────────────────────────┐
+│                    EXTERNAL SERVICES                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐            │
+│  │ OpenRouter   │  │ HuggingFace  │  │   FAISS      │            │
+│  │ (LLM Access) │  │ (Embeddings) │  │(Vector Search│            │
+│  └──────────────┘  └──────────────┘  └──────────────┘            │
+└───────────────────────────────────────────────────────────────────┘
 ```
 
 ### Request Flow
@@ -95,7 +135,7 @@ User Query → Content Type Router
               │    ↓
               │  FAISS Similarity Search (k=3)
               │    ↓
-              │  Retrieved Chunks
+              │  Retrieved Chunks (returned to frontend)
               │    ↓
               │  Stuff-Docs QA Chain
               │    ↓
@@ -116,37 +156,27 @@ User Query → Content Type Router
 
 ## 🛠 Tech Stack
 
-### Frontend & Framework
-- **[Streamlit](https://streamlit.io)** — Interactive web application framework
-- **Custom CSS** — "Forge" theme with Playfair Display + Outfit typography
+### Backend (server/)
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Framework** | FastAPI + uvicorn[standard] | Async REST API with auto docs |
+| **LLM Framework** | LangChain 1.2+ (LCEL) | RAG chains, agents, memory |
+| **LLM Provider** | OpenRouter | Access to 100+ models (GPT, Claude, etc.) |
+| **Embeddings** | HuggingFace (all-MiniLM-L6-v2) | Sentence encoding (384-dim vectors) |
+| **Vector Store** | FAISS (faiss-cpu) | Fast similarity search (in-memory) |
+| **Database** | Firebase Firestore | NoSQL for user data, chat, vectorstores, PDFs |
+| **Authentication** | Firebase Admin SDK | JWT token verification |
+| **Data Processing** | PyPDF, pandas, youtube-transcript-api | PDF/CSV/YouTube parsing |
 
-### Backend & Processing
-- **[LangChain](https://python.langchain.com/)** — LLM orchestration framework
-  - `ConversationalRetrievalChain` for RAG workflow
-  - `ConversationBufferWindowMemory` for context management
-  - Custom `ChatPromptTemplate`s for system prompts
-- **[LangChain Experimental](https://python.langchain.com/docs/integrations/toolkits/pandas)** — Pandas DataFrame agent for CSV analysis
-- **[PyPDFLoader](https://python.langchain.com/docs/integrations/document_loaders/pypdf)** — PDF parsing and extraction
-- **[youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api)** — YouTube transcript extraction
-- **[RecursiveCharacterTextSplitter](https://python.langchain.com/docs/modules/data_connection/document_transformers/text_splitters/recursive_text_splitter)** — Intelligent text chunking
-
-### Vector Database & Embeddings
-- **[FAISS](https://github.com/facebookresearch/faiss)** (`faiss-cpu`) — Facebook AI Similarity Search
-- **[HuggingFace Embeddings](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)** — `all-MiniLM-L6-v2` (384-dim, runs locally)
-
-### Data & Authentication
-- **[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)** — User management and authentication
-- **[Google Cloud Firestore](https://firebase.google.com/docs/firestore)** — NoSQL document database for:
-  - User profiles and API keys
-  - Serialized FAISS vectorstores (chunked)
-  - Persistent chat history
-
-### LLM Gateway
-- **[OpenRouter](https://openrouter.ai)** — Unified API gateway supporting:
-  - OpenAI (GPT-4, GPT-4o-mini)
-  - Anthropic (Claude Sonnet 3.7/4.5)
-  - Google (Gemini 2.5/3 Flash)
-  - xAI (Grok 4/4.1 Fast)
+### Frontend (client/)
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Framework** | Next.js 16.1.6 | React framework with App Router |
+| **UI Library** | React 19.2.3 | Component-based UI |
+| **Styling** | Tailwind CSS v4 | Utility-first CSS framework |
+| **Authentication** | Firebase Client SDK | User auth state management |
+| **Fonts** | Fontshare (Satoshi, Clash Display, General Sans, JetBrains Mono) | Custom typography |
+| **Build Tool** | Turbopack | Fast bundler for Next.js |
 
 ---
 
@@ -156,11 +186,16 @@ User Query → Content Type Router
 1. **Firebase Project** ([console.firebase.google.com](https://console.firebase.google.com))
    - Enable Authentication (Email/Password provider)
    - Create a Firestore database
-   - Generate a service account key (JSON)
+   - Generate a service account key (JSON) and save as `serviceAccount.json` in project root
 
 2. **OpenRouter Account** ([openrouter.ai](https://openrouter.ai))
    - Sign up for an API key
    - Fund account (pay-as-you-go pricing)
+
+### Required Software
+- **Python 3.11+** (backend)
+- **Node.js 18+** (frontend)
+- **npm or yarn** (package manager)
 
 ---
 
@@ -173,20 +208,23 @@ git clone https://github.com/yourusername/omnimind.git
 cd omnimind
 ```
 
-### 2. Create Virtual Environment
+### 2. Backend Setup
+
+#### Create Virtual Environment
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+cd server
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-### 3. Install Dependencies
+#### Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Download Embedding Model
+#### Download Embedding Model
 
 The HuggingFace embedding model will auto-download on first run (~90MB). To pre-cache:
 
@@ -194,23 +232,45 @@ The HuggingFace embedding model will auto-download on first run (~90MB). To pre-
 python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 ```
 
+### 3. Frontend Setup
+
+```bash
+cd ../client
+npm install
+```
+
 ---
 
 ## ⚙ Configuration
 
-### 1. Firebase Web API Key
+### 1. Firebase Setup
 
-Update `modules/auth.py` line 40 with your Firebase Web API key:
+Place your `serviceAccount.json` in the project root (`OmniMind/serviceAccount.json`).
 
-```python
-FIREBASE_API_KEY = "AIzaSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+### 2. Backend Configuration
+
+Create `server/.env` (optional, for custom ports):
+
+```env
+PORT=8000
 ```
 
-Get this from: Firebase Console → Project Settings → Web API Key
+### 3. Frontend Configuration
 
-### 2. OpenRouter API Key
+Create `client/.env.local`:
 
-Users provide their own OpenRouter API keys via the UI (stored in Firestore per-user). Alternatively, set a shared key in the app for single-user deployments.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+```
+
+Get Firebase config from: Firebase Console → Project Settings → General → Your apps → Firebase SDK snippet
+
+### 4. OpenRouter API Key
+
+Users provide their own OpenRouter API keys via the Profile page (stored in Firestore per-user).
 
 ---
 
@@ -218,185 +278,166 @@ Users provide their own OpenRouter API keys via the UI (stored in Firestore per-
 
 ### Starting the Application
 
+#### Terminal 1 - Backend
+
 ```bash
-streamlit run app.py
+cd server
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The app will open at `http://localhost:8501`
+Backend will run at `http://localhost:8000` (API docs at `/docs`)
+
+#### Terminal 2 - Frontend
+
+```bash
+cd client
+npm run dev
+```
+
+Frontend will run at `http://localhost:3000`
 
 ### First-Time Setup
 
 1. **Create Account**
-   - Navigate to the "Create Account" tab
-   - Enter email, password, and optional display name
-   - Click "Create Account"
+   - Open `http://localhost:3000/login`
+   - Click "Sign Up" tab
+   - Enter email, password, and display name
+   - Click "Sign Up"
 
-2. **Sign In**
-   - Switch to "Sign In" tab
-   - Enter credentials
-   - You'll be redirected to the chat interface
-
-3. **Configure API Key**
-   - Click "Profile" in the sidebar
+2. **Configure API Key**
+   - Navigate to Profile page
    - Enter your OpenRouter API key
-   - Click "Save Key"
+   - Click "Save API Key"
 
 ### Uploading Content
 
 OmniMind supports three content types via tabs in the Upload panel:
 
-#### PDF Documents
-1. Open the **PDF** tab
+#### 📄 PDF Documents
+1. Open the **PDF** tab in the sidebar
 2. Click "Choose a PDF" and select a file
-3. Click "Process & Save"
-4. Watch the animated pipeline:
-   ```
-   📄 Reading PDF pages…
-   ✂️ Chunking into semantic segments…
-   🔢 Generating vector embeddings…
-   ☁️ Saving to cloud storage…
-   ```
+3. Click "Upload PDF"
+4. Wait for processing (text extraction → chunking → embedding → Firestore storage)
+5. Select the file from "Your Files" to start chatting
+6. **PDF Split-View**: When a PDF is selected, the document appears on the left, chat on the right
 
 #### 🎥 YouTube Videos
-1. Open the **🎥 YouTube** tab
-2. Paste a YouTube URL (supports `youtube.com/watch?v=`, `youtu.be/`, and `embed/` formats)
-3. Click "Process Video"
-4. The transcript is fetched, chunked, embedded, and stored — same RAG pipeline as PDFs
+1. Open the **YouTube** tab
+2. Paste a YouTube URL (e.g., `https://www.youtube.com/watch?v=dQw4w9WgXcQ`)
+3. Click "Upload YouTube"
+4. Transcripts are extracted, chunked, and indexed
+5. File appears as `yt_{video_id}` in "Your Files"
 
-#### CSV Datasets
+#### 📊 CSV Files
 1. Open the **CSV** tab
-2. Upload a `.csv` file
-3. Click "Process CSV"
-4. The dataset is stored in Firestore and loaded as a Pandas DataFrame
-5. Queries are handled by a natural language Pandas agent (not RAG)
+2. Upload a CSV file (must have headers)
+3. The file is loaded into a Pandas DataFrame
+4. Use natural language to query (e.g., "What's the average sales?", "Plot revenue by month")
 
-### Chatting with Content
+### Chatting
 
-1. Switch to the **Chat** tab
-2. Select content from the dropdown
-3. Vectorstore (PDF/YouTube) or DataFrame (CSV) loads automatically
-4. Start asking questions in natural language
-5. **PDF / YouTube** → Conversational RAG with source chunks
-6. **CSV** → Pandas agent executes Python to compute answers
-7. Chat history persists across sessions
+1. Select a file from "Your Files" list
+2. Type your question in the input box at the bottom
+3. **Thinking State**: Watch the terminal-style pipeline stages as the system processes your query:
+   - `[+] PARSE` - Question condensation
+   - `[+] EMBED` - Vector embedding
+   - `[+] SEARCH` - FAISS similarity search
+   - `[+] RANK` - Relevance scoring
+   - `[+] GEN` - Response generation
+4. **Source Chunks**: Click the collapsible section to view retrieved document chunks with page numbers
+5. **Context**: Last 8 Q&A pairs are automatically included for context-aware responses
 
-### Example Interactions
+### Autonomous Agents
 
-**PDF Chat:**
+If RAG can't answer (e.g., "What's 123 * 456?" or "Who won the 2024 Olympics?"), the system falls back to LangChain agents:
+- **Calculator** - Math queries
+- **Wikipedia** - General knowledge
+- **DuckDuckGo** - Current events
+
+---
+
+## 📁 Project Structure
+
 ```
-User: "What is the main topic of this document?"
-SangamAI: Based on the content, this document focuses on...
-
-User: "Can you elaborate on chapter 3?"
-SangamAI: Chapter 3 discusses... [automatically understands context]
-```
-
-**YouTube Chat:**
-```
-User: "What is this video about?"
-SangamAI: The video covers... [answers from transcript]
-
-User: "What did the speaker say about AI?"
-SangamAI: Around the middle of the video, the speaker mentions...
-```
-
-**CSV Chat:**
-```
-User: "What is the total revenue?"
-SangamAI: The total revenue is $1,234,567.89
-
-User: "Which month had the highest sales?"
-SangamAI: March had the highest sales at $189,432
+OmniMind/
+├── server/                          # FastAPI Backend
+│   ├── main.py                      # FastAPI app entry point
+│   ├── middleware.py                # JWT authentication
+│   ├── routes/
+│   │   ├── auth.py                  # Register endpoint
+│   │   ├── upload.py                # PDF/YouTube/CSV upload
+│   │   ├── chat.py                  # Message endpoint
+│   │   ├── files.py                 # File management, PDF serving
+│   │   └── profile.py               # User profile, API key
+│   ├── modules/
+│   │   ├── chains.py                # LCEL-based ConversationalRAGChain
+│   │   ├── rag.py                   # Vectorstore creation
+│   │   ├── memory.py                # Chat history
+│   │   ├── database.py              # Firestore operations
+│   │   ├── agents.py                # LangChain agents
+│   │   ├── llm.py                   # OpenRouter client
+│   │   ├── prompts.py               # System prompts
+│   │   └── theme.py                 # (Legacy, not used)
+│   └── requirements.txt
+│
+├── client/                          # Next.js Frontend
+│   ├── app/
+│   │   ├── layout.tsx               # Root layout
+│   │   ├── page.tsx                 # Landing page
+│   │   ├── login/
+│   │   │   └── page.tsx             # Auth page
+│   │   ├── chat/
+│   │   │   └── page.tsx             # Main chat interface (split-view)
+│   │   ├── profile/
+│   │   │   └── page.tsx             # User profile
+│   │   └── globals.css              # Obsidian Ember theme
+│   ├── lib/
+│   │   ├── firebase.ts              # Firebase client config
+│   │   ├── auth-context.tsx         # Auth state management
+│   │   └── api.ts                   # API client functions
+│   ├── package.json
+│   └── tailwind.config.ts
+│
+├── serviceAccount.json              # Firebase Admin SDK credentials
+├── firebase.config                  # (Legacy, not used)
+└── README.md
 ```
 
 ---
 
-## Project Structure
+## 🧠 How It Works
 
-```
-sangamai/
-├── app.py                      # Application entry point & routing
-├── requirements.txt            # Python dependencies
-├── README.md                   # This file
-│
-├── modules/                    # Core application modules
-│   ├── agents.py               # Pandas DataFrame agent for CSV analysis
-│   ├── auth.py                 # Firebase authentication helpers
-│   ├── chains.py               # LangChain chain assembly
-│   ├── database.py             # Firestore CRUD & vectorstore serialization
-│   ├── llm.py                  # LLM factory for OpenRouter
-│   ├── memory.py               # Conversational memory management
-│   ├── prompts.py              # System, condense-question & YouTube prompts
-│   ├── rag.py                  # RAG pipeline (PDF + YouTube: load, chunk, embed, retrieve)
-│   └── theme.py                # CSS injection for "Forge" theme
-│
-└── views/                      # Streamlit page views
-    ├── chat.py                 # Main chat interface (upload + chat tabs)
-    ├── login.py                # Authentication page (sign in / register)
-    └── profile.py              # User profile & settings
-```
+### Complete RAG Pipeline
 
-### Module Responsibilities
+#### 1. **Document Ingestion**
 
-| Module | Purpose |
-|--------|---------|
-| `app.py` | Firebase initialization, session state management, page routing |
-| `modules/auth.py` | User registration, password verification, username management |
-| `modules/chains.py` | Wires LLM + retriever + memory into `ConversationalRetrievalChain` |
-| `modules/database.py` | FAISS serialization to/from Firestore, chat history CRUD |
-| `modules/llm.py` | Creates `ChatOpenAI` instances configured for OpenRouter |
-| `modules/memory.py` | Per-file `ConversationBufferWindowMemory` + Firestore persistence |
-| `modules/prompts.py` | Defines QA system/human prompts and condense-question prompt |
-| `modules/rag.py` | PDF loading, text splitting, embedding generation, FAISS creation |
-| `modules/theme.py` | Injects custom CSS for industrial-warmth aesthetic |
-| `views/chat.py` | Upload tab (PDF processing), chat tab (document querying) |
-| `views/login.py` | Sign in and registration forms |
-| `views/profile.py` | User info display, username/API key management |
+When a user uploads a PDF:
 
----
-
-## How It Works
-
-### RAG Pipeline Deep Dive
-
-PDFs and YouTube videos share the same RAG pipeline — the only difference is the ingestion step.
-
-#### 1. **Content Ingestion & Chunking**
-
-**PDF path:**
 ```python
+# Extract text
 loader = PyPDFLoader(file_path)
-docs = loader.load()  # One Document per page
-chunks = splitter.split_documents(docs)
-```
+pages = loader.load()
 
-**YouTube path:**
-```python
-ytt_api = YouTubeTranscriptApi()
-transcript = ytt_api.fetch(video_id)
-transcript_text = " ".join([snippet.text for snippet in transcript])
-docs = [Document(page_content=transcript_text, metadata={...})]
-chunks = splitter.split_documents(docs)
-```
-
-**Shared splitter (both paths):**
-```python
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,           # ~1000 characters per chunk
-    chunk_overlap=200,         # 200-char overlap for context continuity
-    separators=["\n\n", "\n", ". ", " ", ""]  # Respect paragraph/sentence boundaries
+# Chunk with overlap
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200,
+    separators=["\n\n", "\n", ". ", " ", ""]
 )
+chunks = text_splitter.split_documents(pages)
 ```
 
-**Why this approach?**
-- Preserves semantic boundaries (paragraphs, sentences)
-- Overlap ensures context isn't lost at chunk boundaries
-- 1000 chars ≈ 250 tokens (fits well in LLM context windows)
-- YouTube reuses 100% of the PDF pipeline from chunking onwards
+**Why 1000 chars?**
+- Short enough to fit in context windows
+- Long enough to preserve semantic meaning
+- 200-char overlap prevents context loss at boundaries
 
 #### 2. **Embedding Generation**
 
 ```python
+from langchain_huggingface import HuggingFaceEmbeddings
+
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 # Generates 384-dimensional vectors per chunk
 # Runs locally (no API costs, ~1-2s per document)
@@ -420,12 +461,19 @@ chunks = [pkl[i:i+700KB] for i in range(0, len(pkl), 700KB)]
 
 # Store in Firestore subcollection
 users/{uid}/files/{filename}/chunks/{0,1,2,...}
+
+# Also store raw PDF bytes
+users/{uid}/files/{filename}/pdf_raw/{0,1,2,...}
 ```
 
 **Why FAISS?**
 - **Fast:** ~1ms for similarity search on 10K vectors
 - **Efficient:** Low memory footprint
 - **Portable:** Serializes to bytes for cloud storage
+
+**Why chunk at 700KB?**
+- Firestore document size limit is 1MB
+- 700KB provides safety margin for metadata
 
 #### 4. **Query Processing**
 
@@ -480,6 +528,24 @@ Context:
 User: {standalone_question}
 ```
 
+**Stage 4: Return to Frontend**
+
+```json
+{
+  "answer": "Machine learning differs from deep learning in that...",
+  "sources": [
+    {
+      "content": "Machine learning is a subset...",
+      "page": 12,
+      "source": "ml_textbook.pdf"
+    },
+    ...
+  ]
+}
+```
+
+The frontend displays the answer and shows collapsible source chunks with page numbers.
+
 #### 5. **Memory Update**
 
 ```python
@@ -497,7 +563,7 @@ save_chat_message(user_id, file_name, "assistant", response)
 
 ---
 
-## Memory System
+## 💾 Memory System
 
 ### Architecture
 
@@ -505,19 +571,21 @@ OmniMind implements a **dual-layer memory system**:
 
 | Layer | Storage | Lifespan | Purpose |
 |-------|---------|----------|---------|
-| **LangChain Memory** | `st.session_state` | Session only | Fed into chain for context-aware retrieval |
-| **Display History** | `st.session_state` + Firestore | Persistent | Shown in UI, survives refresh |
+| **LangChain Memory** | Backend state | Session only | Fed into chain for context-aware retrieval |
+| **Display History** | Firestore | Persistent | Shown in UI, survives refresh |
 
-### Memory Type: ConversationBufferWindowMemory
+### Memory Type: Windowed Message History
 
 ```python
-memory = ConversationBufferWindowMemory(
-    k=8,                          # Keep last 8 human↔AI exchange pairs
-    memory_key="chat_history",    # Key the chain reads
-    return_messages=True,         # Return as Message objects (not strings)
-    input_key="question",
-    output_key="answer"
-)
+def build_memory_from_history(history: list) -> list:
+    """Convert chat history to LangChain message objects."""
+    messages = []
+    for msg in history[-8:]:  # Last 8 turns
+        if msg["role"] == "user":
+            messages.append(HumanMessage(content=msg["content"]))
+        else:
+            messages.append(AIMessage(content=msg["content"]))
+    return messages
 ```
 
 **Why windowed (not summary-based)?**
@@ -526,10 +594,9 @@ Initial implementation used `ConversationSummaryBufferMemory`, but OpenRouter-pr
 
 **Per-File Isolation**
 
-Each document gets its own memory instance:
-```python
-st.session_state[f"memory_{filename}"] = memory
-st.session_state[f"messages_{filename}"] = [...]
+Each document gets its own chat history in Firestore:
+```
+users/{uid}/files/{filename}/messages/{auto-id}
 ```
 
 This prevents context bleeding between different documents.
@@ -539,9 +606,11 @@ This prevents context bleeding between different documents.
 ```
 New Message
     ↓
-Session State Update (instant)
+Frontend State Update (instant)
     ↓
-Firestore Write (async)
+POST /chat (backend processes)
+    ↓
+Firestore Write
     ↓
 users/{uid}/files/{file}/messages/{auto-id}
   { role: "user", content: "...", timestamp: <server> }
@@ -551,20 +620,16 @@ On page reload:
 ```
 Page Load
     ↓
-get_chat_messages(file_name)
+GET /files/{file_name}/messages
     ↓
-Check st.session_state cache
-    ↓ (if empty)
 Load from Firestore
     ↓
-Hydrate session state
-    ↓
-Render in UI
+Display in UI
 ```
 
 ---
 
-## Data Schema
+## 📊 Data Schema
 
 ### Firestore Collections
 
@@ -593,6 +658,12 @@ users/
             │       └── chunk_id: number
             │     ...
             │
+            ├── pdf_raw/              # Raw PDF bytes (for split-view display)
+            │     0/
+            │       ├── data: bytes   # Binary chunk (≤700KB)
+            │       └── chunk_id: number
+            │     ...
+            │
             └── messages/             # Chat history
                   {auto-id}/
                     ├── role: "user" | "assistant"
@@ -601,36 +672,14 @@ users/
                   ...
 ```
 
-### Session State Keys
-
-```python
-st.session_state = {
-    "user_id": str | None,                    # Firebase UID (null if logged out)
-    "page": "chat" | "profile",               # Current page
-    "vectors": FAISS | None,                  # Loaded vectorstore (PDF/YouTube)
-    "dataframe": DataFrame | None,            # Loaded DataFrame (CSV)
-    "active_file": str | None,                # Currently selected content
-    
-    # Per-file memory (dynamic keys)
-    "memory_{filename}": ConversationBufferWindowMemory,
-    "messages_{filename}": list[dict],
-}
-```
-
 ---
 
+## 📄 License
 
-## Security Considerations
-
-### Authentication
-- Passwords are **hashed by Firebase** (bcrypt with salt)
-- API keys stored in Firestore are **encrypted at rest** by Google Cloud
-- Service account credentials stored in `secrets.toml` ((not committed :) )
-
-### Data Isolation
-- Users can only access their own documents (enforced by Firestore rules)
-- Session state is server-side (not exposed to client)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 **Built with ❤️ by Anas**
+
+*For questions or support, open an issue on GitHub or reach out via email.*

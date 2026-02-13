@@ -1,8 +1,8 @@
-import streamlit as st
+import os
 from firebase_admin import auth, firestore
 import requests
 
-API_KEY = "PUT_YOUR_OWN_API_KEY_HERE_WHY_TAKE_MINE"
+API_KEY = os.getenv("FIREBASE_API_KEY", "PUT_YOUR_OWN_API_KEY_HERE_WHY_TAKE_MINE")
 
 
 def verify_password(email, password):
@@ -30,7 +30,7 @@ def register_user(email, password):
         })
         return user.uid
     except Exception as e:
-        st.error(f"Error: {e}")
+        print(f"Error registering user: {e}")
         return None
 
 

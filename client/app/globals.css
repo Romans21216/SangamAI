@@ -1,0 +1,158 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=clash-display@400,500,600,700&f[]=general-sans@400,500&f[]=jet-brains-mono@400&display=swap');
+@import "tailwindcss";
+
+
+@theme inline {
+  --color-void: #060608;
+  --color-surface: #0e0e12;
+  --color-card: #141419;
+  --color-accent: #E8532E;
+  --color-accent-glow: #FF7043;
+  --color-accent-dim: #B33D1F;
+  --color-ember: #F4A261;
+  --color-text: #E8E4DD;
+  --color-muted: #6E6E78;
+  --color-dim: #2A2A32;
+  --color-border: rgba(232, 83, 46, 0.12);
+  --color-success: #4ade80;
+  --color-glass: rgba(14, 14, 18, 0.85);
+
+  --font-sans: "Satoshi", sans-serif;
+  --font-display: "Clash Display", sans-serif;
+  --font-body: "General Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ── Global base ────────────────────────────────────────────── */
+body {
+  background: var(--color-void);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  letter-spacing: -0.01em;
+}
+
+/* ── Noise grain overlay ────────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Diagonal ember streak ──────────────────────────────────── */
+body::after {
+  content: "";
+  position: fixed;
+  top: -120px;
+  right: -200px;
+  width: 600px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--color-accent) 30%, var(--color-ember) 70%, transparent);
+  transform: rotate(-25deg);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.2;
+  filter: blur(0.5px);
+}
+
+/* ── Sidebar scrollbar ──────────────────────────────────────── */
+.sidebar-scroll::-webkit-scrollbar { width: 3px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: var(--color-dim); border-radius: 4px; }
+.sidebar-scroll::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+
+/* ── Chat scrollbar ─────────────────────────────────────────── */
+.chat-scroll::-webkit-scrollbar { width: 5px; }
+.chat-scroll::-webkit-scrollbar-track { background: transparent; }
+.chat-scroll::-webkit-scrollbar-thumb { background: var(--color-dim); border-radius: 4px; }
+
+/* ── Global scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb { background: var(--color-dim); border-radius: 3px; }
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(232, 83, 46, 0.25);
+  color: var(--color-text);
+}
+
+/* ── Markdown prose ─────────────────────────────────────────── */
+.prose p { margin-bottom: 0.6rem; line-height: 1.75; font-size: 0.9rem; }
+.prose ul, .prose ol { margin-left: 1.25rem; margin-bottom: 0.75rem; }
+.prose li { margin-bottom: 0.2rem; line-height: 1.7; }
+.prose code {
+  background: rgba(232, 83, 46, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--color-ember);
+}
+.prose pre {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+}
+.prose pre code { background: transparent; padding: 0; color: var(--color-text); }
+.prose strong { color: var(--color-accent-glow); font-weight: 600; }
+.prose h1, .prose h2, .prose h3 {
+  font-family: var(--font-display);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.prose a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
+.prose blockquote {
+  border-left: 2px solid var(--color-accent);
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ── Thinking animation ─────────────────────────────────────── */
+@keyframes thinking-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes ember-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.thinking-dot {
+  animation: thinking-pulse 1.4s ease-in-out infinite;
+}
+.thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+.ember-gradient {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-ember), var(--color-accent));
+  background-size: 200% 200%;
+  animation: ember-flow 3s ease infinite;
+}
+
+/* ── Chunk source card ──────────────────────────────────────── */
+.chunk-card {
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(232, 83, 46, 0.03) 100%);
+  border: 1px solid rgba(232, 83, 46, 0.1);
+  border-left: 2px solid var(--color-accent);
+}
+
+/* ── Input glow ─────────────────────────────────────────────── */
+.input-glow:focus-within {
+  box-shadow: 0 0 0 1px var(--color-accent), 0 0 20px -5px rgba(232, 83, 46, 0.15);
+}
+
+/* ── File item ──────────────────────────────────────────────── */
+.file-item { transition: all 0.15s ease; }
+.file-item:hover { background: rgba(232, 83, 46, 0.04); }
+.file-item.active { background: rgba(232, 83, 46, 0.08); border-color: rgba(232, 83, 46, 0.25); }

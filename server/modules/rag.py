@@ -6,19 +6,20 @@ Supports multiple content types:
 - Plain text (for general chunking)
 """
 
-import streamlit as st
+from functools import lru_cache
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.schema import Document
+from langchain_core.documents import Document
 from youtube_transcript_api import YouTubeTranscriptApi
 import re
 
 
 # ---------- Embeddings (cached once per server process) ----------
 
-@st.cache_resource(show_spinner=False)
+@lru_cache(maxsize=1)
 def get_embeddings() -> HuggingFaceEmbeddings:
     """Return a singleton HuggingFace embedding model (free, runs locally)."""
     return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")

@@ -1,0 +1,50 @@
+# ─── Sensitive Files ───────────────────────────────────────
+serviceAccount.json
+firebase.config
+*.pem
+*.key
+
+# ─── Python ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Virtual Environments ───────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+.virtualenv/
+
+# ─── Streamlit ──────────────────────────────────────────────
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# ─── IDEs & Editors ─────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ─── Logs & Temp Files ──────────────────────────────────────
+*.log
+logs/
+temp/
+tmp/
+*.tmp
+
+# ─── Project Specific ───────────────────────────────────────
+# Local test data
+test_data/
+uploads/

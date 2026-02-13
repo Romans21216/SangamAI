@@ -7,7 +7,6 @@ querying, plotting, and statistical analysis.
 
 import pandas as pd
 from langchain_experimental.agents import create_pandas_dataframe_agent
-from langchain.agents.agent_types import AgentType
 
 
 def create_pandas_agent_chain(llm, dataframe: pd.DataFrame, verbose: bool = False):
@@ -41,9 +40,8 @@ def create_pandas_agent_chain(llm, dataframe: pd.DataFrame, verbose: bool = Fals
     return create_pandas_dataframe_agent(
         llm=llm,
         df=dataframe,
-        agent_type=AgentType.OPENAI_FUNCTIONS,  # Uses function calling for tool use
         verbose=verbose,
-        allow_dangerous_code=True,  # Required for code execution (runs in sandbox)
+        allow_dangerous_code=True,  # Required for code execution
         handle_parsing_errors=True,
     )
 

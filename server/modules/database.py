@@ -1,4 +1,3 @@
-import streamlit as st
 from firebase_admin import firestore
 import pickle
 import math
@@ -91,6 +90,43 @@ def load_vectorstore_from_firestore(user_id, file_name, embeddings):
         allow_dangerous_deserialization=True
     )
     return vectorstore
+
+
+# ══════════════════════════════════════════════════════════════════════
+# RAW PDF STORAGE  (for PDF viewer)
+# ══════════════════════════════════════════════════════════════════════
+# Path: users/{user_id}/files/{file_name}/pdf_raw/{chunk_id}
+
+def save_pdf_bytes(user_id: str, file_name: str, raw_bytes: bytes):
+    """Save raw PDF bytes to Firestore in chunks (for later viewing)."""
+    CHUNK_SIZE = 700 * 1024
+    num_chunks = math.ceil(len(raw_bytes) / CHUNK_SIZE)
+    db = _get_db()
+    doc_ref = db.collection("users").document(user_id).collection("files").document(file_name)
+    doc_ref.update({"pdf_size": len(raw_bytes), "pdf_chunks": num_chunks})
+    for i in range(num_chunks):
+        start = i * CHUNK_SIZE
+        chunk_data = raw_bytes[start:start + CHUNK_SIZE]
+        doc_ref.collection("pdf_raw").document(str(i)).set({"data": chunk_data, "chunk_id": i})
+
+
+def load_pdf_bytes(user_id: str, file_name: str) -> bytes | None:
+    """Reconstruct raw PDF bytes from Firestore chunks."""
+    db = _get_db()
+    doc_ref = db.collection("users").document(user_id).collection("files").document(file_name)
+    meta = doc_ref.get()
+    if not meta.exists:
+        return None
+    data = meta.to_dict()
+    num_chunks = data.get("pdf_chunks", 0)
+    if num_chunks == 0:
+        return None
+    full = b""
+    for i in range(num_chunks):
+        chunk_doc = doc_ref.collection("pdf_raw").document(str(i)).get()
+        if chunk_doc.exists:
+            full += chunk_doc.to_dict()["data"]
+    return full
 
 
 # ══════════════════════════════════════════════════════════════════════

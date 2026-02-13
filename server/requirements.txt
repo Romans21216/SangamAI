@@ -1,4 +1,7 @@
-streamlit
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
 firebase-admin
 langchain
 langchain-community
@@ -12,4 +15,3 @@ youtube-transcript-api
 pandas
 matplotlib
 tabulate
-python-dotenv
