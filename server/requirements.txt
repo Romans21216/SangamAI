@@ -9,8 +9,6 @@ langchain-openai
 langchain-google-genai
 langchain-text-splitters
 langchain-experimental
-langchain-huggingface
-sentence-transformers
 faiss-cpu
 pypdf
 youtube-transcript-api

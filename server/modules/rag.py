@@ -7,10 +7,11 @@ Supports multiple content types:
 """
 
 from functools import lru_cache
+import os
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -20,9 +21,12 @@ import re
 # ---------- Embeddings (cached once per server process) ----------
 
 @lru_cache(maxsize=1)
-def get_embeddings() -> HuggingFaceEmbeddings:
-    """Return a singleton HuggingFace embedding model (free, runs locally)."""
-    return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+def get_embeddings() -> OpenAIEmbeddings:
+    """Return a singleton OpenAI embedding model (API-based, lightweight)."""
+    return OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        openai_api_key=os.getenv("OPENAI_API_KEY")
+    )
 
 
 # ---------- Text Splitter (shared across all content types) ----------
